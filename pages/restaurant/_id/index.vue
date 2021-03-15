@@ -1,10 +1,11 @@
 <template>
   <div>
-    <div v-if="!$apollo.queries.restaurant.loading">
+    <div v-if="!$apollo.queries.restaurant.loading" class="mycontainer">
+      <h1>Our menu</h1>
       <div class="shop">
+        <div v-for="meal in restaurant.meals" :key="meal.id" class="rest">
         <b-card
-          :title="restaurant.name"
-          img-src="restaurant.meals[ID].image"
+          img-src="meals.image"
           img-alt="Image"
           img-top
           tag="article"
@@ -12,15 +13,16 @@
           class="mb-2"
         >
           <b-card-text>
-            <span> {{ restaurant.meals[ID].name }} </span>
+            <span> {{ meal.name }} </span>
             <br>
-            <span id="price"> {{ restaurant.meals[ID].price }} GH</span>
+            <span id="price"> {{ meal.price }} GH</span>
             <br>
-            <span> {{ restaurant.meals[ID].description }} </span>
+            <span> {{ meal.description }} </span>
           </b-card-text>
         </b-card>
       </div>
     </div>
+  </div>
   </div>
 </template>
 
@@ -37,7 +39,7 @@ export default {
             name
             slug
 
-            meals($id: ID){
+            meals{
               id
               image
               name
@@ -59,6 +61,60 @@ export default {
 
 <style>
 .shop {
-  margin-top: 80px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  overflow: hidden;
+  flex-wrap: wrap;
+}
+
+.rest{
+  width: 20%;
+  margin: 3px;
+}
+
+.mycontainer{
+  margin: 7% 5%;
+}
+
+h1{
+  margin: 5%;
+}
+
+@media (max-width: 576px) {
+  h1{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+  }
+  .rest{
+    width: 50%;
+  }
+}
+@media (max-width: 768px) {
+  h1{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+  }
+  .rest{
+    width: 40%;
+  }
+}
+@media (min-width: 769px) and (max-width:1024px) {
+  h1{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+  }
+  .rest{
+    width: 30%;
+  }
 }
 </style>
